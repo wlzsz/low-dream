@@ -1,0 +1,35 @@
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+
+class Solution {
+    public boolean isValid(String s) {
+    	int n = s.length();
+    	if(n%2==1) {
+    		return false;
+    	}
+    //使用map一一对应，后续查看栈顶的数值是否与对应值相等
+    Map<Character,Character> pairs = new HashMap<Character,Character>(){{
+    	put(')','(');
+    	put(']','[');
+    	put('}','{');
+    }
+    };
+    //使用栈
+    Deque<Character> stack = new LinkedList<Character>();
+    for(int i=0;i<n;i++) {
+    	char ch = s.charAt(i);
+    	if(pairs.containsKey(ch)) {
+    		if(stack.isEmpty()||stack.peek()!= pairs.get(ch)) {
+    			return false;
+    		}
+    		stack.pop();
+    	}
+    	else {
+    		stack.push(ch);
+    	}
+    }
+    return stack.isEmpty();
+    }
+}
